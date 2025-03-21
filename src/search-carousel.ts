@@ -24,6 +24,10 @@ export class SearchCarousel extends LitElement {
     private originalAriaLabelList: string[] = [];
     private firstLoad = true;
     private isNeedToChangeAriaLabel = false;
+
+    // Make idNum a class property
+    private idNum: number = 0;
+
     private generateRandomId(): number {
         return Math.floor(Math.random() * 999) + 1;
     }
@@ -43,7 +47,7 @@ export class SearchCarousel extends LitElement {
     async performQuery() {
         try {
             const response = await fetch(this.searchUrl);
-            this.data = response.json();
+            this.data = await response.json(); // Ensure to use await here
         } catch (error) {
         }
 
@@ -69,7 +73,7 @@ export class SearchCarousel extends LitElement {
         this.institution = parsedUrl.searchParams.get("inst")
 
         const titleHtml = this.getTitleHtml();
-        const idNum: number = this.generateRandomId();  // Local variable with explicit type assertion
+        this.idNum = this.generateRandomId(); // Set the generated idNum here
 
 
         const docsPromise = this.data.then((data: any) => data.docs.map((doc: any) =>
