@@ -25,13 +25,6 @@ export class SearchCarousel extends LitElement {
     private firstLoad = true;
     private isNeedToChangeAriaLabel = false;
 
-    // Make idNum a class property
-    private idNum: number = 0;
-
-    private generateRandomId(): number {
-        return Math.floor(Math.random() * 999) + 1;
-    }
-
     constructor() {
         super();
         PnxCard;
@@ -47,7 +40,7 @@ export class SearchCarousel extends LitElement {
     async performQuery() {
         try {
             const response = await fetch(this.searchUrl);
-            this.data = await response.json(); // Ensure to use await here
+            this.data = response.json();
         } catch (error) {
         }
 
@@ -73,7 +66,6 @@ export class SearchCarousel extends LitElement {
         this.institution = parsedUrl.searchParams.get("inst")
 
         const titleHtml = this.getTitleHtml();
-        this.idNum = this.generateRandomId(); // Set the generated idNum here
 
 
         const docsPromise = this.data.then((data: any) => data.docs.map((doc: any) =>
@@ -88,8 +80,8 @@ export class SearchCarousel extends LitElement {
 
         return html`
 
-            <div class="gallery-container" id="showcase-${idNum}">
-                <a href="#showcase-${idNum}-link" class="showcaseSkip" part="skip">Skip this section</a>
+            <div class="gallery-container" id="showcase">
+                <a href="#showcase-link" class="showcaseSkip" part="skip">Skip this section</a>
                 <button @click="${this.activateChangeAriaLabel}" class="swiper-button-prev"></button>
                 <swiper-container init="false" class="swiper">
                     ${until(docsPromise, ``)}
@@ -320,8 +312,8 @@ export class SearchCarousel extends LitElement {
 
     private getTitleHtml() {
         if (this.titleText) {
-            return this.titleLink ? html`<p class="browseLink" id="showcase-${idNum}-link"><a target="_blank" href="${this.titleLink}">Browse more ${this.titleText} books in OneSearch</a>
-            </p>` : html`<p class="browseLink" id="showcase-${idNum}-link"><a target="_blank" href="https://caccl-laccd.primo.exlibrisgroup.com/discovery/search?tab=LibraryCatalog&search_scope=LAPC_LibraryCatalog&vid=01CACCL_LACCD:LAPC&offset=0">Search for books in OneSearch</a></p>`
+            return this.titleLink ? html`<p class="browseLink" id="showcase-link"><a target="_blank" href="${this.titleLink}">Browse more ${this.titleText} books in OneSearch</a>
+            </p>` : html`<p class="browseLink" id="showcase-link"><a target="_blank" href="https://caccl-laccd.primo.exlibrisgroup.com/discovery/search?tab=LibraryCatalog&search_scope=LAPC_LibraryCatalog&vid=01CACCL_LACCD:LAPC&offset=0">Search for books in OneSearch</a></p>`
         }
         return html``;
     }
