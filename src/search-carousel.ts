@@ -84,8 +84,8 @@ export class SearchCarousel extends LitElement {
 
         return html`
 
-            <div class="gallery-container" id="showcase-${this.idNum}">
-                <a href="#showcase-${this.idNum}-link" class="showcaseSkip" part="skip">Skip this section</a>
+            <div class="gallery-container" id="showcase-${idNum}">
+                <a href="#showcase-${idNum}-link" class="showcaseSkip" part="skip">Skip this section</a>
                 <button @click="${this.activateChangeAriaLabel}" class="swiper-button-prev"></button>
                 <swiper-container init="false" class="swiper">
                     ${until(docsPromise, ``)}
@@ -316,8 +316,8 @@ export class SearchCarousel extends LitElement {
 
     private getTitleHtml() {
         if (this.titleText) {
-            return this.titleLink ? html`<p class="browseLink" id="showcase-${this.idNum}-link"><a target="_blank" href="${this.titleLink}">Browse more ${this.titleText} books in OneSearch</a>
-            </p>` : html`<p class="browseLink" id="showcase-${this.idNum}-link"><a target="_blank" href="https://caccl-laccd.primo.exlibrisgroup.com/discovery/search?tab=LibraryCatalog&search_scope=LAPC_LibraryCatalog&vid=01CACCL_LACCD:LAPC&offset=0">Search for books in OneSearch</a></p>`
+            return this.titleLink ? html`<p class="browseLink" id="showcase-${idNum}-link"><a target="_blank" href="${this.titleLink}">Browse more ${this.titleText} books in OneSearch</a>
+            </p>` : html`<p class="browseLink" id="showcase-${idNum}-link"><a target="_blank" href="https://caccl-laccd.primo.exlibrisgroup.com/discovery/search?tab=LibraryCatalog&search_scope=LAPC_LibraryCatalog&vid=01CACCL_LACCD:LAPC&offset=0">Search for books in OneSearch</a></p>`
         }
         return html``;
     }
