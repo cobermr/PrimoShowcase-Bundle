@@ -69,7 +69,7 @@ export class SearchCarousel extends LitElement {
         this.institution = parsedUrl.searchParams.get("inst")
 
         const titleHtml = this.getTitleHtml();
-        const idNum = this.generateRandomId();
+        const idNum: number = this.generateRandomId();  // Local variable with explicit type assertion
 
 
         const docsPromise = this.data.then((data: any) => data.docs.map((doc: any) =>
