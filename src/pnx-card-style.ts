@@ -28,6 +28,9 @@ export const styles = css`
     font-size: var(--title-font-size);
     font-weight: var(--title-font-weight);
   }
+  a:hover .record-details h3 {
+    color: #000;
+  }
   .record-details span {
     font-size: var(--description-font-size);
     font-weight: var(--description-font-weight);

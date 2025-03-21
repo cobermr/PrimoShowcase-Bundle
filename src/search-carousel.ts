@@ -24,6 +24,9 @@ export class SearchCarousel extends LitElement {
     private originalAriaLabelList: string[] = [];
     private firstLoad = true;
     private isNeedToChangeAriaLabel = false;
+    private generateRandomId(): number {
+        return Math.floor(Math.random() * 999) + 1;
+    }
 
     constructor() {
         super();
@@ -66,6 +69,7 @@ export class SearchCarousel extends LitElement {
         this.institution = parsedUrl.searchParams.get("inst")
 
         const titleHtml = this.getTitleHtml();
+        const idNum = this.generateRandomId();
 
 
         const docsPromise = this.data.then((data: any) => data.docs.map((doc: any) =>
@@ -80,15 +84,15 @@ export class SearchCarousel extends LitElement {
 
         return html`
 
-            <div class="gallery-container">
-                ${titleHtml}
+            <div class="gallery-container" id="showcase-${this.idNum}">
+                <a href="#showcase-${this.idNum}-link" class="showcaseSkip" part="skip">Skip this section</a>
                 <button @click="${this.activateChangeAriaLabel}" class="swiper-button-prev"></button>
                 <swiper-container init="false" class="swiper">
                     ${until(docsPromise, ``)}
                 </swiper-container>
                 <!-- Navigation buttons -->
                 <button @click="${this.activateChangeAriaLabel}" class="swiper-button-next"></button>
-                <div  @click="${this.activateChangeAriaLabel}" class="swiper-pagination"></div>
+                ${titleHtml}
             </div>
         `;
     }
@@ -226,7 +230,7 @@ export class SearchCarousel extends LitElement {
                         text-decoration: underline;
                     }
                     
-                    .gallery-container h2 {
+                    .gallery-container p.browseLink {
                         text-align: center;
                     }
                     
@@ -312,8 +316,8 @@ export class SearchCarousel extends LitElement {
 
     private getTitleHtml() {
         if (this.titleText) {
-            return this.titleLink ? html`<h2><a target="_blank" href="${this.titleLink}">${this.titleText}</a>
-            </h2>` : html`<h2>${this.titleText}</h2>`
+            return this.titleLink ? html`<p class="browseLink" id="showcase-${this.idNum}-link"><a target="_blank" href="${this.titleLink}">Browse more ${this.titleText} books in OneSearch</a>
+            </p>` : html`<p class="browseLink" id="showcase-${this.idNum}-link"><a target="_blank" href="https://caccl-laccd.primo.exlibrisgroup.com/discovery/search?tab=LibraryCatalog&search_scope=LAPC_LibraryCatalog&vid=01CACCL_LACCD:LAPC&offset=0">Search for books in OneSearch</a></p>`
         }
         return html``;
     }
